@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>ImageRegionSelection Demo</title>
+
+		<!-- Bootstrap CSS -->
+		<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+		<link href="src/css/slider.css" rel="stylesheet">
+		<link href="src/css/demo.css" rel="stylesheet">
+		
+		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+			<script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+			<script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+	</head>
+	<body>
+		<h1 class="text-center">ImageRegionSelection</h1>
+		
+		<div id="demo" class="container" ng-app="ImageRegionSelectionDemo">
+		
+			<div class="row" ng-controller="DemoController">
+				
+				<div class="col-md-8">
+					
+					<div class="workspace">
+					
+						<regions src="data.src" width="data.width" height="data.height">
+							<region ng-class="{ 'selected': selectedRegion == region }" ng-repeat="region in data.regions" 
+								x="region.x" 
+								y="region.y"
+								width="region.width" 
+								height="region.height" 
+								rotation="region.rotation">
+								{{ region.name }}
+							</region>
+						</regions>
+						
+					</div>
+					
+				</div>
+				
+				<div class="col-md-4">
+					<div class="controls">
+						
+						<form class="form-horizontal">
+							
+							<div class="form-group">
+								<label for="name" class="col-sm-3 control-label">Name</label>
+								<div class="col-sm-9">
+									<input id="name" ng-model="selectedRegion.name" class="form-control">
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label for="width" class="col-sm-3 control-label">Width</label>
+								<div class="col-sm-9">
+									<slider
+									    ng-model="selectedRegion.width"
+									    floor="1"
+									    ceiling="{{ data.width }}"
+									    step="1">
+									</slider>
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label for="height" class="col-sm-3 control-label">Height</label>
+								<div class="col-sm-9">
+									<slider
+									    ng-model="selectedRegion.height"
+									    floor="1"
+									    ceiling="{{ data.height }}"
+									    step="1">
+									</slider>
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label for="x" class="col-sm-3 control-label">X</label>
+								<div class="col-sm-9">
+									<slider
+									    ng-model="selectedRegion.x"
+									    floor="0"
+									    ceiling="{{ data.width - selectedRegion.width }}"
+									    step="1">
+									</slider>
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label for="y" class="col-sm-3 control-label">Y</label>
+								<div class="col-sm-9">
+									<slider
+									    ng-model="selectedRegion.y"
+									    floor="0"
+									    ceiling="{{ data.height - selectedRegion.height }}"
+									    step="1">
+									</slider>
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label for="rotation" class="col-sm-3 control-label">Rotation</label>
+								<div class="col-sm-9">
+									<slider
+									    ng-model="selectedRegion.rotation"
+									    floor="-180"
+									    ceiling="180"
+									    step="1">
+									</slider>
+									<button class="btn btn-sm btn-default" ng-click="selectedRegion.rotation = 0">Reset</button>
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label for="regions" class="col-sm-3 control-label">Regions</label>
+								<div class="col-sm-9">
+									<select class="form-control" id="regions" size="5" ng-model="selectedRegion" ng-options="region.name for region in data.regions"></select>
+									<button class="btn btn-sm btn-danger" ng-click="removeRegion()" ng-disabled="selectedRegion == null">Remove</button>
+									<button class="btn btn-sm btn-success" ng-click="addRegion()">Add</button>
+								</div>
+							</div>
+							
+						</form>
+						
+					</div>
+				</div>
+				
+			</div>
+			
+		</div>
+		
+		<!-- jQuery -->
+		<!-- <script src="//code.jquery.com/jquery.js"></script> -->
+		<!-- Bootstrap JavaScript -->
+		<!-- <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script> -->
+		
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.12/angular.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.12/angular-touch.min.js"></script>
+		<script src="bower_components/venturocket-angular-slider/build/angular-slider.js"></script>
+		
+		<script src="src/js/demo.js"></script>
+		
+	</body>
+</html>
